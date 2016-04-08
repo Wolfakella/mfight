@@ -6,7 +6,7 @@
     Корзина
     <div class="pull-right">
     <a href="{{ url('cart/flush') }}" class="btn btn-default btn-sm">Очистить корзину</a>
-    <!-- <a href="{{ url('cart/print') }}" class="btn btn-primary btn-sm">Распечатать ситуации</a> -->
+    <a href="{{ url('cart/print') }}" id="popup" class="btn btn-primary btn-sm">Распечатать ситуации</a>
     </div>
     </h1>
     @if(!empty($situations))

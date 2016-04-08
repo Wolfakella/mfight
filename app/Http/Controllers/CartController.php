@@ -29,17 +29,12 @@ class CartController extends Controller
     {
     	$situation = Situation::find($id);
     	if(Cache::has('cart'))
-    	{
     		$situations = Cache::get('cart');
-    		$situations->put($situation->id, $situation);
-    		Cache::put('cart', $situations, 15);
-    	}
     	else
-    	{
     		$situations = new Collection();
-    		$situations->put($situation->id, $situation);
-    		Cache::add('cart', $situations, 15);
-    	}
+    	
+    	$situations->put($situation->id, $situation);
+    	Cache::forever('cart', $situations);
     	return redirect()->back();
     }
     
@@ -49,7 +44,7 @@ class CartController extends Controller
     	{
     		$situations = Cache::get('cart');
     		$temp = $situations->forget($id);
-    		Cache::put('cart', $situations, 15);
+    		Cache::forever('cart', $situations);
     	}
     	return redirect('cart');
     }
@@ -57,5 +52,14 @@ class CartController extends Controller
     {
     	if(Cache::has('cart')) Cache::forget('cart');
     	return redirect('cart');
+    }
+    public function output()
+    {
+    	if(Cache::has('cart'))
+    	{
+    		$situations = Cache::get('cart');
+    		return view('cart.print')->withSituations($situations->all());
+    	}
+    	return view('cart.index');
     }
 }

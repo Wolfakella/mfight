@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('situations/create', 'SituationsController@create')->name('situations.create');
 	Route::get('express/create', 'ExpressController@create')->name('express.create');
 	Route::post('situations', 'SituationsController@store')->name('situations.store');
+	Route::get('cart/print', 'CartController@output')->name('cart.print');
 });
 
 Route::group(['middleware' => ['web']], function () {

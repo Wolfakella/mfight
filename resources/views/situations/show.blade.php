@@ -9,9 +9,9 @@
                 	<h2>
                 	{{ $situation->title }}
                 	    <div class="pull-right">
-					    <a href="{{ url('situations/year/'. $situation->created_at->format('Y')) }}" class="btn btn-default btn-sm">Назад</a>
+					    <a href="{{ url('situations/year/'. $situation->created_at->format('Y')) }}" class="btn btn-default btn-sm">К {{ $situation->created_at->format('Y') }} году</a>
 					    @if($cart)
-                            <button type="submit" class="btn btn-default btn-sm">В корзине</button>
+                            <button type="submit" class="btn btn-default btn-sm disabled">В корзине</button>
                 		@else
 					    <a href="{{ url( 'cart/add/' . $situation->id ) }}" class="btn btn-primary btn-sm">Добавить в корзину</a>
                     	@endif
@@ -21,14 +21,7 @@
                 	<a href="{{ url( ($situation->roles ? 'situations/' : 'express/') . $situation->id . '/edit') }}">
                             <button type="submit" class="btn btn-primary btn-xs">Редактировать</button>
                     </a>
-                     {!! Form::open([
-                            'method'=>'DELETE',
-                            'url' => ['situations', $situation->id],
-                            'style' => 'display:inline'
-                        ]) !!}
-                            {!! Form::submit('Удалить', ['class' => 'btn btn-danger btn-xs']) !!}
-                     {!! Form::close() !!}
-                     @endrole
+                    @endrole
                 </div>
                 <div class="panel-body">
                     <p>{!! $situation->body !!}</p>
@@ -37,6 +30,17 @@
                     	{!! $situation->roles !!}
                     @endif
                     <a href="{{ $situation->link }}">Ссылка на источник</a>
+                    <div class="pull-right">
+                    @role('admin')
+					{!! Form::open([
+                            'method'=>'DELETE',
+                            'url' => ['situations', $situation->id],
+                            'style' => 'display:inline'
+                        ]) !!}
+                            {!! Form::submit('Удалить', ['class' => 'btn btn-danger btn-xs']) !!}
+                     {!! Form::close() !!}
+                     @endrole
+					</div>
                 </div>
             </div>
         </div>

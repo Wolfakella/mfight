@@ -43,14 +43,14 @@ class SituationsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['match' => 'required', 'body' => 'required', ]);
+        $this->validate($request, ['title' => 'required', 'body' => 'required', 'link' => 'required']);
 
         $request->body = htmlentities($request->body);
         Situation::create($request->all());
 
         Session::flash('flash_message', 'Situation added!');
 
-        return redirect('situations');
+        return redirect()->route('situations.show', [$id]);
     }
 
     /**
@@ -95,14 +95,14 @@ class SituationsController extends Controller
      */
     public function update($id, Request $request)
     {
-        $this->validate($request, ['match' => 'required', 'body' => 'required', ]);
+    	$this->validate($request, ['title' => 'required', 'body' => 'required', 'link' => 'required']);
 
         $situation = Situation::findOrFail($id);
         $situation->update($request->all());
 
         Session::flash('flash_message', 'Situation updated!');
 
-        return redirect('situations');
+        return redirect()->route('situations.show', [$id]);
     }
 
     /**

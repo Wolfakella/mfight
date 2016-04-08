@@ -6,7 +6,16 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                	<h2>{{ $situation->title }}</h2>
+                	<h2>
+                	{{ $situation->title }}
+                	@if($cart)
+                            <button type="submit" class="btn btn-default btn-xs">В корзине</button>
+                	@else
+                	<a href="{{ url( 'cart/add/' . $situation->id ) }}">
+                            <button type="submit" class="btn btn-primary btn-xs">Добавить в корзину</button>
+                    </a>
+                    @endif
+                	</h2>
                 	@role('admin')
                 	<a href="{{ url( ($situation->roles ? 'situations/' : 'express/') . $situation->id . '/edit') }}">
                             <button type="submit" class="btn btn-primary btn-xs">Редактировать</button>
@@ -26,7 +35,7 @@
                     	<h3>Роли и интересы:</h3>
                     	{!! $situation->roles !!}
                     @endif
-                    <a href="{{ $situation->link }}">{{ $situation->link }}</a>
+                    <a href="{{ $situation->link }}">Ссылка на источник</a>
                 </div>
             </div>
         </div>

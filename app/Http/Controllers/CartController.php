@@ -17,9 +17,12 @@ class CartController extends Controller
      */
     public function anyIndex()
     {
-        $situations = Cache::get('cart');
-
-        return view('cart.index')->withSituations($situations->all());
+    	if(Cache::has('cart'))
+    	{
+    		$situations = Cache::get('cart');
+    		return view('cart.index')->withSituations($situations->all());
+    	}
+    	return view('cart.index');
     }
     
     public function getAdd($id)
@@ -28,27 +31,31 @@ class CartController extends Controller
     	if(Cache::has('cart'))
     	{
     		$situations = Cache::get('cart');
-    		$situations->push($situation);
-    		Cache::put('cart', $situations, 5);
+    		$situations->put($situation->id, $situation);
+    		Cache::put('cart', $situations, 15);
     	}
     	else
     	{
     		$situations = new Collection();
-    		$situations->push($situation);
-    		Cache::add('cart', $situations, 5);
+    		$situations->put($situation->id, $situation);
+    		Cache::add('cart', $situations, 15);
     	}
-    	return view('cart.index')->withSituations($situations->all());
+    	return redirect()->back();
     }
     
     public function getRemove($id)
     {
-    	$situation = Situation::find($id);
     	if(Cache::has('cart'))
     	{
     		$situations = Cache::get('cart');
-    		$situations->pull($situation);
-    		Cache::put('cart', $situations, 5);
+    		$temp = $situations->forget($id);
+    		Cache::put('cart', $situations, 15);
     	}
-    	return view('cart.index')->withSituations($situations->all());
+    	return redirect('cart');
+    }
+    public function getFlush()
+    {
+    	if(Cache::has('cart')) Cache::forget('cart');
+    	return redirect('cart');
     }
 }

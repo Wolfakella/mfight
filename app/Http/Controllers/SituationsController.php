@@ -7,6 +7,7 @@ use App\Jobs\GetSituationsJob;
 use GuzzleHttp\Client;
 use App\Situation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 use Session;
 
@@ -65,7 +66,10 @@ class SituationsController extends Controller
         
         $situation->body = html_entity_decode($situation->body);
 
-        return view('situations.show', compact('situation'));
+        if(Cache::has('cart') && Cache::get('cart')->has($id)) $inCart = 1;
+        else $inCart = 0;
+        
+        return view('situations.show', compact('situation'))->withcart($inCart);
     }
 
     /**
@@ -122,47 +126,5 @@ class SituationsController extends Controller
     	$situations = Situation::whereNotNull('roles')->whereBetween('created_at', [ Carbon::createFromDate($year, 0, 0), Carbon::createFromDate($year+1, 0, 0)])->orderBy('created_at', 'desc')->get();
 
         return view('situations.list', compact('situations'));
-    }
-    
-    public function competition($year, $competition)
-    {
-    	$data = array();
-    	$matches = array();
-    	$client = new Client();
-    	
-    	$response = $client->request(
-    			'GET',
-    			"http://www.poedinki.ru/competitions/$year/$competition/situations"
-    			);
-    	//$text = iconv('cp1251', 'utf-8', $response->getBody());
-    	$text = $response->getBody();
-    	
-    	$pattern = "@<h2><a name=\"\d+\"></a>\d+\.&nbsp;(.*)</h2>@U";
-    	preg_match_all($pattern, $text, $matches);
-    	$i = 0;
-    	foreach($matches[1] as $match)
-    	{
-    		$data[$i]['title'] = iconv('cp1251', 'utf-8', $match);
-    		$data[$i]['link'] = "http://www.poedinki.ru/competitions/$year/$competition/situations/#".($i+1);
-    		//$data[$i]['created_at'] = Carbon::create($year, null, null, null, null, null);
-    		$i++;
-    	}
-    	
-    	$pattern = "^class=\"Situation\">(.*)</div>^Us";
-    	preg_match_all($pattern, $text, $matches);
-    	$i = 0;
-    	foreach($matches[1] as $match) $data[$i++]['body'] = iconv('cp1251', 'utf-8', $match);
-    	
-		foreach($data as $record)
-		{
-			$situation = Situation::firstOrCreate(['title' => $record['title']]);
-			$situation->body = $record['body'];
-			$situation->link = $record['link'];
-			$time = Carbon::create($year, null, null, null, null, null);
-			if($situation->created_at > $time) $situation->created_at = $time;
-			$situation->save();
-		}
-    	//return dd($response);http://www.poedinki.ru/competitions/2012/.*<div class=\"Situation\">(.*)</div>
-    	return dd(Situation::all());
     }
 }

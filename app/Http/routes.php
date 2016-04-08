@@ -34,15 +34,15 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('situations/create', 'SituationsController@create')->name('situations.create');
 	Route::get('express/create', 'ExpressController@create')->name('express.create');
 	Route::post('situations', 'SituationsController@store')->name('situations.store');
-	Route::controller('cart', 'CartController');
 });
 
 Route::group(['middleware' => ['web']], function () {
-	Route::get('situations/index', 'SituationsController@index')->name('situations.index');
+	Route::get('situations', 'SituationsController@index')->name('situations.index');
 	Route::get('situations/{id}', 'SituationsController@show')->name('situations.show');
 	Route::get('situations/year/{year?}', 'SituationsController@year')->name('situations.year');
 	Route::get('express/year/{year?}', 'ExpressController@year')->name('express.year');
 	Route::get('express/index', 'ExpressController@index')->name('express.index');
+	Route::controller('cart', 'CartController');
 	//	Route::get('situations/competition/{year}/{competition?}', 'SituationsController@competition')->name('situations.competition');
 });
 

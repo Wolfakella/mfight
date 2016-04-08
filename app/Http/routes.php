@@ -40,7 +40,7 @@ Route::group(['middleware' => ['auth']], function() {
 Route::group(['middleware' => ['web']], function () {
 	Route::get('situations', 'SituationsController@index')->name('situations.index');
 	Route::get('situations/{id}', 'SituationsController@show')->name('situations.show');
-	Route::get('situations/year/{year?}', 'SituationsController@year')->name('situations.year');
+	Route::get('situations/year/{date?}', ['as' => 'situations.year', 'uses' => 'SituationsController@year']);
 	Route::get('express/year/{year?}', 'ExpressController@year')->name('express.year');
 	Route::get('express/index', 'ExpressController@index')->name('express.index');
 	Route::controller('cart', 'CartController');

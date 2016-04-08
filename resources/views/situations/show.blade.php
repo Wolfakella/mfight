@@ -8,13 +8,14 @@
                 <div class="panel-heading">
                 	<h2>
                 	{{ $situation->title }}
-                	@if($cart)
-                            <button type="submit" class="btn btn-default btn-xs">В корзине</button>
-                	@else
-                	<a href="{{ url( 'cart/add/' . $situation->id ) }}">
-                            <button type="submit" class="btn btn-primary btn-xs">Добавить в корзину</button>
-                    </a>
-                    @endif
+                	    <div class="pull-right">
+					    <a href="{{ url('situations/year/'. $situation->created_at->format('Y')) }}" class="btn btn-default btn-sm">Назад</a>
+					    @if($cart)
+                            <button type="submit" class="btn btn-default btn-sm">В корзине</button>
+                		@else
+					    <a href="{{ url( 'cart/add/' . $situation->id ) }}" class="btn btn-primary btn-sm">Добавить в корзину</a>
+                    	@endif
+					    </div>
                 	</h2>
                 	@role('admin')
                 	<a href="{{ url( ($situation->roles ? 'situations/' : 'express/') . $situation->id . '/edit') }}">

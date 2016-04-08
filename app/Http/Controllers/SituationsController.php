@@ -121,9 +121,9 @@ class SituationsController extends Controller
         return redirect('situations');
     }
     
-    public function year($year)
+    public function year($date = 2016)
     {
-    	$situations = Situation::whereNotNull('roles')->whereBetween('created_at', [ Carbon::createFromDate($year, 0, 0), Carbon::createFromDate($year+1, 0, 0)])->orderBy('created_at', 'desc')->get();
+    	$situations = Situation::whereNotNull('roles')->whereBetween('created_at', [ Carbon::createFromDate($date, 0, 0), Carbon::createFromDate($date+1, 0, 0)])->orderBy('created_at', 'desc')->get();
 
         return view('situations.list', compact('situations'));
     }

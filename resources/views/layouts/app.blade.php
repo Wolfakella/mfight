@@ -68,8 +68,8 @@
                 <ul class="nav navbar-nav navbar-right">
                 	<li><a href="{{ url('/cart') }}">
                 		Корзина
-                		@if(Cache::has('cart'))
-                			<b>( {{ Cache::get('cart')->count() }} )</b>
+                		@if(Cookie::has('cart') && count(Cookie::get('cart')) > 0)
+                			<b>( {{ count(Cookie::get('cart')) }} )</b>
                 		@endif
                 	</a></li>
                     <!-- Authentication Links -->

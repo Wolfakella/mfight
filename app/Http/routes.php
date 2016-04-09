@@ -30,7 +30,7 @@ Route::group(['middleware' => ['role:admin']], function () {
 	Route::delete('situations/{id}', 'SituationsController@destroy')->name('situations.destroy');
 });
 
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['web', 'auth']], function() {
 	Route::get('situations/create', 'SituationsController@create')->name('situations.create');
 	Route::get('express/create', 'ExpressController@create')->name('express.create');
 	Route::post('situations', 'SituationsController@store')->name('situations.store');

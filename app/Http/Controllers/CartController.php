@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
+use Cookie;
 use App\Http\Requests;
 use App\Situation;
 
@@ -17,49 +18,53 @@ class CartController extends Controller
      */
     public function anyIndex()
     {
-    	if(Cache::has('cart'))
+    	if(Cookie::has('cart'))
     	{
-    		$situations = Cache::get('cart');
-    		return view('cart.index')->withSituations($situations->all());
+    		$IDs = Cookie::get('cart');
+    		$situations = Situation::whereIn('id', $IDs)->get();
+    		return view('cart.index')->withSituations($situations);
     	}
     	return view('cart.index');
     }
     
     public function getAdd($id)
     {
-    	$situation = Situation::find($id);
-    	if(Cache::has('cart'))
-    		$situations = Cache::get('cart');
-    	else
-    		$situations = new Collection();
+    	if(Cookie::has('cart') && Situation::find($id)->exists())
+    			$situations = Cookie::get('cart');
+    	else 
+    			$situations = array();
+
+    	if(array_search($id, $situations) === false) array_push($situations, $id);
     	
-    	$situations->put($situation->id, $situation);
-    	Cache::forever('cart', $situations);
-    	return redirect()->back();
+    	return redirect()->back()->withCookie(cookie()->forever('cart', $situations));
     }
     
     public function getRemove($id)
     {
-    	if(Cache::has('cart'))
+    	if(Cookie::has('cart'))
     	{
-    		$situations = Cache::get('cart');
-    		$temp = $situations->forget($id);
-    		Cache::forever('cart', $situations);
+    		$situations = Cookie::get('cart'); 
+    		$key = array_search($id, $situations);
+    		if($key !== false) array_pull($situations, $key);
+    		if(count($situations))
+    				return redirect('cart')->withCookie(cookie()->forever('cart', $situations));
+    		else
+    				return redirect('cart')->withCookie(cookie()->forget('cart'));
     	}
-    	return redirect('cart');
+    	else return redirect('cart');
     }
     public function getFlush()
     {
-    	if(Cache::has('cart')) Cache::forget('cart');
-    	return redirect('cart');
+    	return redirect('cart')->withCookie(cookie()->forget('cart'));
     }
-    public function output()
+    public function output(Request $request)
     {
-    	if(Cache::has('cart'))
+    	if(Cookie::has('cart'))
     	{
-    		$situations = Cache::get('cart');
-    		return view('cart.print')->withSituations($situations->all());
+    		$IDs = Cookie::get('cart');
+    		$situations = Situation::whereIn('id', $IDs)->get();
+    		return view('cart.print')->withSituations($situations);
     	}
-    	return view('cart.index');
+    	else return view('cart.index');
     }
 }

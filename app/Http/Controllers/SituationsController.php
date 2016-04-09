@@ -7,7 +7,7 @@ use App\Jobs\GetSituationsJob;
 use GuzzleHttp\Client;
 use App\Situation;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
+use Cookie;
 use Carbon\Carbon;
 use Session;
 
@@ -65,8 +65,13 @@ class SituationsController extends Controller
         $situation = Situation::findOrFail($id);
         
         $situation->body = html_entity_decode($situation->body);
-
-        if(Cache::has('cart') && Cache::get('cart')->has($id)) $inCart = 1;
+        //dd( Cookie::get('cart') );
+		//dd( array_search("3331", Cookie::get('cart')) );
+        if(
+        		Cookie::has('cart') && 
+        		count(Cookie::get('cart')) > 0 &&
+        		array_search($situation->id, Cookie::get('cart')) !== false        		
+        ) $inCart = 1;
         else $inCart = 0;
         
         return view('situations.show', compact('situation'))->withcart($inCart);

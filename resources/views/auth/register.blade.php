@@ -23,16 +23,29 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group{{ $errors->has('surname') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Ваша фамилия</label>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="surname" value="{{ old('surname') }}">
+
+                                @if ($errors->has('surname'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('surname') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('login') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Ваш E-Mail</label>
 
                             <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                <input type="email" class="form-control" name="login" value="{{ old('login') }}">
 
-                                @if ($errors->has('email'))
+                                @if ($errors->has('login'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('login') }}</strong>
                                     </span>
                                 @endif
                             </div>

@@ -22,7 +22,7 @@ class UsersController extends Controller
     {
         $users = User::paginate(15);
 
-        return view('users.index', compact('users'));
+        return view('users.list', compact('users'));
     }
 
     /**

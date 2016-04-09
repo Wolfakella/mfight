@@ -28,6 +28,7 @@ Route::group(['middleware' => ['role:admin']], function () {
 	Route::get('situations/{id}/edit', 'SituationsController@edit')->name('situations.edit');
 	Route::patch('situations/{id}', 'SituationsController@update')->name('situations.update');
 	Route::delete('situations/{id}', 'SituationsController@destroy')->name('situations.destroy');
+	Route::resource('users', 'UsersController');
 });
 
 Route::group(['middleware' => ['web', 'auth']], function() {

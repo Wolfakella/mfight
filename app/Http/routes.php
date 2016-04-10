@@ -45,6 +45,8 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('express/year/{year?}', 'ExpressController@year')->name('express.year');
 	Route::get('express/index', 'ExpressController@index')->name('express.index');
 	Route::controller('cart', 'CartController');
+	Route::delete('champs/{id}', 'ChampsController@remove');
+	Route::controller('champs', 'ChampsController');
 	//	Route::get('situations/competition/{year}/{competition?}', 'SituationsController@competition')->name('situations.competition');
 });
 

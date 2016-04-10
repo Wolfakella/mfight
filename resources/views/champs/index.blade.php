@@ -24,7 +24,7 @@
                 {{-- */$x++;/* --}}
                 <tr>
                     <td>{{ $x }}</td>
-                    <td><a href="{{ url('situations', $item->id) }}">{{ $item->title }}</a></td>
+                    <td><a href="{{ url('champs/', $item->id) }}">{{ $item->title }}</a></td>
                     <td>{{ $item->created_at->format('Y') }}</td>
                     <td>
                     	<form method="POST" action="{{ url('champs/' . $item->id) }}">

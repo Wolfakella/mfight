@@ -35,4 +35,9 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
     protected $hidden = [
         'password', 'remember_token',
     ];
+    
+    public function champs()
+    {
+    	return $this->belongsToMany('App\Champ')->withPivot('status');
+    }
 }

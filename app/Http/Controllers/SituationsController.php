@@ -132,4 +132,22 @@ class SituationsController extends Controller
 
         return view('situations.list', compact('situations'));
     }
+    
+    public function search(Request $request)
+    {
+    	//dd( $request );
+    	$situations = Situation::query();
+    	if($request['query']) $situations = $situations->where('title', 'LIKE', '%'.$request['query'].'%');
+    	if($request['year']) $situations = $situations->whereBetween('created_at', [ Carbon::createFromDate($request['year'], 0, 0), Carbon::createFromDate($request['year']+1, 0, 0)]);
+    	if ($request['t'])
+    		switch($request['t'])
+    		{
+    			case '1': $situations = $situations->whereNull('roles');
+    			break;
+    			case '2': $situations = $situations->whereNotNull('roles');
+    			break;
+    		}
+    	$situations = $situations->orderBy('created_at', 'desc')->get();
+    	return view('situations.index')->withSituations($situations);
+    }
 }

@@ -50,6 +50,9 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('champs/{id}/players', 'ChampsController@players');
 	Route::get('champs/{champ_id}/players/{user_id}/{status}', 'ChampsController@addplayer');
 	Route::get('champs/{champ_id}/remove/{user_id}', 'ChampsController@removeplayer');
+	Route::any('champs/{id}/situations', 'ChampsController@situations');
+	Route::get('champs/{champ_id}/situations/{situation_id}', 'ChampsController@addsituation');
+	Route::get('champs/{champ_id}/situationremove/{situation_id}', 'ChampsController@removesituation');
 	Route::delete('champs/{id}', 'ChampsController@remove');
 
 	Route::controller('champs', 'ChampsController');

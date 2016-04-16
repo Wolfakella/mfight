@@ -14,4 +14,9 @@ class Champ extends Model
 	{
 		return $this->belongsToMany('App\User')->withPivot('status');
 	}
+	
+	public function situations()
+	{
+		return $this->belongsToMany('App\Situation');
+	}
 }

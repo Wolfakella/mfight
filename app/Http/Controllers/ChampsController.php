@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Champ;
 use App\User;
+use App\Situation;
 use App\Http\Requests;
 
 class ChampsController extends Controller
@@ -21,8 +22,14 @@ class ChampsController extends Controller
     	$champ = Champ::findOrFail($id);
     	$players = $champ->users()->wherePivot('status', 'LIKE', 'Игрок')->get();
     	$judges = $champ->users()->wherePivot('status', 'LIKE', 'Судья')->get();
+    	$situations = $champ->situations()->get();
     	//dd( $players );
-    	return view('champs.show', ['champ' => $champ, 'players' => $players, 'judges' => $judges]);
+    	return view('champs.show', [
+    			'champ' => $champ, 
+    			'players' => $players, 
+    			'judges' => $judges, 
+    			'situations' => $situations
+    	]);
     }
     
     public function remove($id)
@@ -46,6 +53,25 @@ class ChampsController extends Controller
     {
     	$champ = Champ::find($champ_id);
     	$champ->users()->detach($user_id);
+    	return redirect()->back();
+    }
+    
+    public function situations($champ_id, Request $request)
+    {
+    	$champ_situations = Champ::find($champ_id)->situations()->get();
+    	$situations = Situation::search($request['query'], $request['year'], $request['t']);
+    	return view('champs.situations', ['situations' => $situations, 'champ_situations' => $champ_situations, 'champ' => $champ_id]);
+    }
+    public function addsituation($champ_id, $situation_id)
+    {
+    	$champ = Champ::find($champ_id);
+    	$champ->situations()->attach($situation_id);
+    	return redirect()->back();
+    }
+    public function removesituation($champ_id, $situation_id)
+    {
+    	$champ = Champ::find($champ_id);
+    	$champ->situations()->detach($situation_id);
     	return redirect()->back();
     }
 }

@@ -10,7 +10,17 @@
 				Поединки
 				</h3></div>
 				<div class="panel-body">
-				
+				@if($duels)
+				@foreach($duels as $duel)
+					<h4>{{ $duel->type->text }}.</h4>
+					<p>{{ $duel->player1->name }} {{ $duel->player1->surname }} 
+					{{ $duel->result1 }} : {{ $duel->result2 }}
+					{{ $duel->player2->name }} {{ $duel->player2->surname }}
+					<br />
+					{{ $duel->situation->title }}
+					</p>
+				@endforeach
+				@endif
 				</div>
 			</div>
 		</div>

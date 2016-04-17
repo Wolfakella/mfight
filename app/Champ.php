@@ -19,4 +19,9 @@ class Champ extends Model
 	{
 		return $this->belongsToMany('App\Situation');
 	}
+	
+	public function duels()
+	{
+		return $this->hasMany('App\Duel');
+	}
 }

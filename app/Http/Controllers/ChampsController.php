@@ -23,12 +23,14 @@ class ChampsController extends Controller
     	$players = $champ->users()->wherePivot('status', 'LIKE', 'Игрок')->get();
     	$judges = $champ->users()->wherePivot('status', 'LIKE', 'Судья')->get();
     	$situations = $champ->situations()->get();
-    	//dd( $players );
+    	$duels = $champ->duels()->get();
+    	//dd( $duels );
     	return view('champs.show', [
     			'champ' => $champ, 
     			'players' => $players, 
     			'judges' => $judges, 
-    			'situations' => $situations
+    			'situations' => $situations,
+    			'duels' => $duels
     	]);
     }
     

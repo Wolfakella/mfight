@@ -27,6 +27,11 @@ class Situation extends Model
     	return $this->belongsToMany('App\Champ');
     }
     
+    public function duels()
+    {
+    	return $this->hasMany('App\Duel');
+    }
+    
     public static function search($query = '', $year = 0, $type = 0)
     {
     	$result = Situation::query();

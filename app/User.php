@@ -40,4 +40,14 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
     {
     	return $this->belongsToMany('App\Champ')->withPivot('status');
     }
+    
+    public function duels()
+    {
+    	return $this->hasMany('App\Duel', 'id', 'player1_id');
+    }
+    
+    public function duels2()
+    {
+    	return $this->hasMany('App\Duel', 'id', 'player2_id');
+    }
 }

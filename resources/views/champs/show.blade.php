@@ -8,17 +8,24 @@
 			<div class="panel panel-default">
 				<div class="panel-heading"><h3>
 				Поединки
+				<a href="{{ url('champs/'.$champ->id.'/newduel') }}" class="btn btn-primary btn-sm">Добавить</a>
 				</h3></div>
-				<div class="panel-body">
+				<div class="panel-body text-center">
 				@if($duels)
 				@foreach($duels as $duel)
 					<h4>{{ $duel->type->text }}.</h4>
-					<p>{{ $duel->player1->name }} {{ $duel->player1->surname }} 
-					{{ $duel->result1 }} : {{ $duel->result2 }}
-					{{ $duel->player2->name }} {{ $duel->player2->surname }}
-					<br />
-					{{ $duel->situation->title }}
+					<p class="lead"><a href="{{ url('users/'.$duel->player1) }}">{{ $duel->player1->name }} {{ $duel->player1->surname }}</a> 
+					<strong>{{ $duel->result1 }} : {{ $duel->result2 }}</strong>
+					<a href="{{ url('users/'.$duel->player2) }}">{{ $duel->player2->name }} {{ $duel->player2->surname }}</a>
 					</p>
+					<strong>Ситуация: </strong>
+					<a href="{{ url('situations/'.$duel->situation_id) }}">{{ $duel->situation->title }}</a>
+					<form method="POST" action="{{ url('champs/'.$champ->id.'/removeduel/'.$duel->id) }}">
+						<input type="hidden" name="_method" value="DELETE" />
+						{!! csrf_field() !!}
+						<input type="submit" value="Удалить" class="btn btn-danger" />
+					</form>
+					<hr />
 				@endforeach
 				@endif
 				</div>

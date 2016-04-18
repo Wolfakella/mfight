@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Champ;
 use App\User;
 use App\Situation;
+use App\Type;
+use App\Duel;
 use App\Http\Requests;
 
 class ChampsController extends Controller
@@ -23,7 +25,7 @@ class ChampsController extends Controller
     	$players = $champ->users()->wherePivot('status', 'LIKE', 'Игрок')->get();
     	$judges = $champ->users()->wherePivot('status', 'LIKE', 'Судья')->get();
     	$situations = $champ->situations()->get();
-    	$duels = $champ->duels()->get();
+    	$duels = $champ->duels()->orderBy('created_at','DESC')->get();
     	//dd( $duels );
     	return view('champs.show', [
     			'champ' => $champ, 
@@ -75,5 +77,32 @@ class ChampsController extends Controller
     	$champ = Champ::find($champ_id);
     	$champ->situations()->detach($situation_id);
     	return redirect()->back();
+    }
+    public function newduel($champ_id)
+    {
+    	$champ = Champ::findOrFail($champ_id);
+    	$types = Type::all();
+    	$players = $champ->users()->wherePivot('status', 'LIKE', 'Игрок')->get();
+    	$situations = $champ->situations()->get();
+    	//dd( $duels );
+    	return view('champs.editduel', [
+    			'champ' => $champ,
+    			'types' => $types,
+    			'players' => $players,
+    			'situations' => $situations
+    	]);
+    }
+    public function storeduel($champ_id, Request $request)
+    {
+    	$duel = new Duel;
+    	$duel->fill($request->all());
+    	$duel->champ_id = $champ_id;
+    	$duel->save();
+    	return redirect()->route('champ.show', [$champ_id]);
+    }
+    public function removeduel($champ_id, $duel_id)
+    {
+    	Duel::destroy($duel_id);
+    	return redirect()->route('champ.show', [$champ_id]);
     }
 }

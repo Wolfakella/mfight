@@ -17,6 +17,10 @@ class Duel extends Model
     		'time'
     ];
     
+    protected $dates = ['created_at', 'updated_at', 'time'];
+    
+    //protected $dateFormat = 'd.m.Y H:i';
+    
     public function player1()
     {
     	return $this->belongsTo('App\User', 'player1_id');

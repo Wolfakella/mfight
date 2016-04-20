@@ -2,61 +2,86 @@
 
 @section('content')
 <div class="container">
-	<h2>{{ $champ->title }}</h2>
+	<div class="row text-center">
+	<h2 class="col-md-offset-2 col-md-8">{{ $champ->title }}</h2>
+	</div>
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-8">
 			<div class="panel panel-default">
-				<div class="panel-heading"><h3>
+				<div class="panel-heading"><h4>
 				Поединки
+				@role('admin')
 				<a href="{{ url('champs/'.$champ->id.'/newduel') }}" class="btn btn-primary btn-sm">Добавить</a>
+				@endrole
 				</h3></div>
 				<div class="panel-body text-center">
 				@if($duels)
 				@foreach($duels as $duel)
-					<h4>{{ $duel->type->text }}.</h4>
-					<p class="lead"><a href="{{ url('users/'.$duel->player1) }}">{{ $duel->player1->name }} {{ $duel->player1->surname }}</a> 
-					<strong>{{ $duel->result1 }} : {{ $duel->result2 }}</strong>
-					<a href="{{ url('users/'.$duel->player2) }}">{{ $duel->player2->name }} {{ $duel->player2->surname }}</a>
-					</p>
+					<h4>{{ $duel->type->text }}. <small>{{ $duel->time->format('d.m.Y, H:i') }}</small></h4>
+					<table width="100%">
+					<tr>
+					<td  width="40%">
+					<a href="{{ url('users/'.$duel->player1_id) }}" class="lead">{{ $duel->player1->name }} {{ $duel->player1->surname }}</a>
+					</td>
+					<td width="20%">
+					<h3>{{ $duel->result1 }} : {{ $duel->result2 }}</h3>
+					</td>
+					<td width="40%">
+					<a href="{{ url('users/'.$duel->player2_id) }}" class="lead">{{ $duel->player2->name }} {{ $duel->player2->surname }}</a>
+					</td>
+					</tr>
+					</table>
 					<strong>Ситуация: </strong>
 					<a href="{{ url('situations/'.$duel->situation_id) }}">{{ $duel->situation->title }}</a>
+					@role('admin')
 					<form method="POST" action="{{ url('champs/'.$champ->id.'/removeduel/'.$duel->id) }}">
 						<input type="hidden" name="_method" value="DELETE" />
 						{!! csrf_field() !!}
 						<input type="submit" value="Удалить" class="btn btn-danger" />
 					</form>
+					@endrole
 					<hr />
 				@endforeach
 				@endif
 				</div>
 			</div>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<div class="panel panel-default">
 				<div class="panel-heading"><h4>
 				Игроки
+				@role('admin')
 				<a href="{{ url('champs/'.$champ->id.'/players') }}" class="btn btn-primary btn-sm">Добавить</a>
+				@endrole
 				</h4></div>
 				<div class="panel-body">
 				@if($players)
-				<ol>
+				<table width="100%" cellpadding="10" class="table table-striped">
 				@foreach($players as $player)
-					<li>
-						<a href="{{url('users/'.$player->id)}}">{{$player->name}} {{$player->surname}}</a>
+					<tr>
+						<td><a href="{{url('users/'.$player->id)}}">{{$player->name}} {{$player->surname}}</a></td>
+						<td>
+						@role('admin')
 						<a href="{{ url('champs/'.$champ->id.'/remove/'.$player->id) }}" class="btn btn-danger btn-xs">Удалить</a>
-					</li>
+						@endrole
+						</td>
+					</tr>
 				@endforeach
-				</ol>
+				</table>
 				@else
 				<p>В этот турнир еще не добавлено ни одного игрока!</p>
+				@role('admin')
 				<a href="{{ url('champs/'.$champ->id.'/players') }}" class="btn btn-primary btn-sm">Добавить</a>
+				@endrole
 				@endif
 				</div>
 			</div>
 			<div class="panel panel-default">
 				<div class="panel-heading"><h4>
 				Ситуации
+				@role('admin')
 				<a href="{{ url('champs/'.$champ->id.'/situations') }}" class="btn btn-primary btn-sm">Добавить</a>
+				@endrole
 				</h4></div>
 				<div class="panel-body">
 				@if($situations)
@@ -64,34 +89,46 @@
 				@foreach($situations as $situation)
 					<li>
 						<a href="{{url('situations/'.$situation->id)}}">{{$situation->title}}</a>
+						@role('admin')
 						<a href="{{ url('champs/'.$champ->id.'/situationremove/'.$situation->id) }}" class="btn btn-danger btn-xs">Удалить</a>
+						@endrole
 					</li>
 				@endforeach
 				</ol>
 				@else
 				<p>В этот турнир еще не добавлено ни одной ситуации!</p>
+				@role('admin')
 				<a href="{{ url('champs/'.$champ->id.'/players') }}" class="btn btn-primary btn-sm">Добавить</a>
+				@endrole
 				@endif
 				</div>
 			</div>
 			<div class="panel panel-default">
 				<div class="panel-heading"><h4>
 				Судьи
+				@role('admin')
 				<a href="{{ url('champs/'.$champ->id.'/players') }}" class="btn btn-primary btn-sm">Добавить</a>
+				@endrole
 				</h4></div>
 				<div class="panel-body">
 				@if($judges)
-				<ol>
+				<table class="table table-striped" width="100%">
 				@foreach($judges as $judge)
-					<li>
-						<a href="{{url('users/'.$judge->id)}}">{{$judge->name}} {{$judge->surname}}</a>
+					<tr>
+						<td><a href="{{url('users/'.$judge->id)}}">{{$judge->name}} {{$judge->surname}}</a></td>						
+						<td>
+						@role('admin')
 						<a href="{{ url('champs/'.$champ->id.'/remove/'.$judge->id) }}" class="btn btn-danger btn-xs">Удалить</a>
-					</li>
+						@endrole
+						</td>
+					</tr>
 				@endforeach
-				</ol>
+				</table>
 				@else
 				<p>В этот турнир еще не добавлено ни одного игрока!</p>
+				@role('admin')
 				<a href="{{ url('champs/'.$champ->id.'/players') }}" class="btn btn-primary btn-sm">Добавить</a>
+				@endrole
 				@endif
 				</div>
 			</div>		

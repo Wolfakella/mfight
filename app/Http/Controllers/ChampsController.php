@@ -82,7 +82,7 @@ class ChampsController extends Controller
     {
     	$champ = Champ::findOrFail($champ_id);
     	$types = Type::all();
-    	$players = $champ->users()->wherePivot('status', 'LIKE', 'Игрок')->get();
+    	$players = $champ->users()->wherePivot('status', 'LIKE', 'Игрок')->orderBy('surname', 'ASC')->get();
     	$situations = $champ->situations()->get();
     	//dd( $duels );
     	return view('champs.editduel', [

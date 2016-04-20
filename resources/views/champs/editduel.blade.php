@@ -24,7 +24,7 @@
 						<label>Игрок 1:</label>
 						<select class="form-control" name="player1_id">
 							@foreach($players as $player)
-								<option value="{{ $player->id }}">{{ $player->name }} {{ $player->surname }}</option>
+								<option value="{{ $player->id }}">{{ $player->surname }} {{ $player->name }}</option>
 							@endforeach	
 						</select>
 						</div>
@@ -44,7 +44,7 @@
 						<label>Игрок 2:</label>
 						<select class="form-control" name="player2_id">
 							@foreach($players as $player)
-								<option value="{{ $player->id }}">{{ $player->name }} {{ $player->surname }}</option>
+								<option value="{{ $player->id }}">{{ $player->surname }} {{ $player->name }}</option>
 							@endforeach	
 						</select>
 						</div>
@@ -64,6 +64,8 @@
 					<option value="{{ $situation->id }}">{{ $situation->title }}</option>
 				@endforeach
 				</select>
+				<label>Дата и время: </label>
+				<input type="datetime" name="time" class="form-control" />
 				<input type="submit" value="Сохранить" class="btn btn-primary" />
 				<a href="" class="btn btn-default">Назад</a>
 			</form>

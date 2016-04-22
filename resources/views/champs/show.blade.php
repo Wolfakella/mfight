@@ -35,10 +35,10 @@
 					<strong>Ситуация: </strong>
 					<a href="{{ url('situations/'.$duel->situation_id) }}">{{ $duel->situation->title }}</a>
 					@role('admin')
-					<form method="POST" action="{{ url('duels') }}">
+					<form method="POST" action="{{ url('duels/'.$duel->id) }}">
 						<input type="hidden" name="_method" value="DELETE" />
 						{!! csrf_field() !!}
-						<input type="hidden" name="duel_id" value="{{$duel->id}}" />
+						<a href="{{ url('duels/'.$duel->id.'/edit') }}" class="btn btn-default">Редактировать</a>
 						<input type="submit" value="Удалить" class="btn btn-danger" />
 					</form>
 					@endrole

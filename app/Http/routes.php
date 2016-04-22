@@ -54,10 +54,12 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('champs/{champ_id}/situations/{situation_id}', 'ChampsController@addsituation');
 	Route::get('champs/{champ_id}/situationremove/{situation_id}', 'ChampsController@removesituation');
 	Route::delete('champs/{id}', 'ChampsController@remove');
-	Route::get('champs/{id}/newduel', 'DuelsController@create');
+	Route::get('champs/{champ_id}/newduel', 'DuelsController@create');
+	Route::post('duels', 'DuelsController@store');
 	Route::get('duels/{id}', 'DuelsController@show')->name('duels.show');
-	Route::patch('duels', 'DuelsController@store');
-	Route::delete('duels', 'DuelsController@delete');
+	Route::get('duels/{id}/edit', 'DuelsController@edit')->name('duels.edit');
+	Route::patch('duels/{id}', 'DuelsController@update');
+	Route::delete('duels/{id}', 'DuelsController@delete');
 
 	Route::controller('champs', 'ChampsController');
 

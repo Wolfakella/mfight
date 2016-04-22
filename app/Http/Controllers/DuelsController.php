@@ -22,8 +22,9 @@ class DuelsController extends Controller
 		$types = Type::all();
 		$players = $champ->users()->wherePivot('status', 'LIKE', 'Игрок')->orderBy('surname', 'ASC')->get();
 		$situations = $champ->situations()->get();
+		$duel = new Duel;
 		
-		return view('duels.edit', compact('champ', 'types', 'players', 'situations'));
+		return view('duels.create', compact('champ', 'types', 'players', 'situations', 'duel'));
 	}
 	
     public function edit($id)
@@ -31,6 +32,7 @@ class DuelsController extends Controller
     	$duel = Duel::findOrFail($id);
     	//$champ = Champ::findOrFail($duel->champ_id);
     	$types = Type::all();
+    	$champ = $duel->champ;
     	$players = $duel->champ
     					->users()
     					->wherePivot('status', 'LIKE', 'Игрок')
@@ -38,23 +40,26 @@ class DuelsController extends Controller
     					->get();
     	$situations = $duel->champ->situations()->get();
     	//dd( $duels );
-    	return view('duels.edit', [
-    			'champ' => $champ,
-    			'types' => $types,
-    			'players' => $players,
-    			'situations' => $situations
-    	]);
+    	return view('duels.edit', compact('champ', 'types', 'players', 'situations', 'duel'));
+    }
+    
+    public function update(Request $request, $id)
+    {
+    	$duel = Duel::findOrFail($id);
+    	$duel->fill($request->except(['_token', '_method']));
+    	$duel->save();
+    	return redirect()->route('champ.show', [$request->input('champ_id')]); 
     }
     
     public function store(Request $request)
     {
-    	$duel = Duel::firstOrCreate($request->except(['_token', '_method']));
+    	$duel = Duel::create($request->except(['_token']));
     	return redirect()->route('champ.show', [$request['champ_id']]);
     }
     
-    public function delete(Request $request)
+    public function delete($id)
     {
-    	Duel::destroy($request['duel_id']);
+    	Duel::destroy($id);
     	return redirect()->back();
     }
 }

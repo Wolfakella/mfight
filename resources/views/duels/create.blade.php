@@ -10,9 +10,8 @@
     <hr/>
 	<div class="row">
 		<div class="col-sm-6">
-			<form method="POST" action="{{ url('duels/'.$duel->id) }}">
+			<form method="POST" action="{{ url('duels') }}">
 				{!! csrf_field() !!}
-				<input type="hidden" name="_method" value="PATCH" />
 				<input type="hidden" name="champ_id" value="{{$champ->id}}" />
 				<label>Тип поединка:</label>
 				{{ Form::select('type_id', $types->lists('text', 'id'), $duel->type_id, ['class' => 'form-control']) }}

@@ -2,21 +2,22 @@
 
 @section('content')
 <div class="container">
-	<h1>Имя Отчество Фамилия</h1>
+	<h1>{{$user->name}} {{$user->middlename}} {{$user->surname}}</h1>
+	<br />
 	<div class="row">
-		<div class="col-sm-3">
-			<img />
+		<div class="col-sm-3 vcenter">
+			<img src="{{ asset('images/placeholder.png')}}" class="image-responsive" />
        	</div>
-       	<div class="col-sm-offset-2 col-sm-6">
+       	<div class="col-sm-6 vcenter">
        		<dl class="dl-horizontal">
 			  	<dt>Компания</dt>
-			  	<dd>ООО "Информационные технологии"</dd>
+			  	<dd>{{$user->company}}</dd>
 			  	<dt>Должность</dt>
-			  	<dd>Заместитель директора по маркетингу</dd>
+			  	<dd>{{$user->position}}</dd>
 			  	<dt>Телефон</dt>
-			  	<dd>89085732132</dd>
+			  	<dd>{{$user->phone}}</dd>
 			  	<dt>Email</dt>
-			  	<dd>nikolay.olkhovsky@gmail.com</dd>
+			  	<dd>{{$user->email}}</dd>
 			</dl>
        	</div>
     </div>

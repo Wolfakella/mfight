@@ -28,7 +28,7 @@ Route::group(['middleware' => ['role:admin']], function () {
 	Route::get('situations/{id}/edit', 'SituationsController@edit')->name('situations.edit');
 	Route::patch('situations/{id}', 'SituationsController@update')->name('situations.update');
 	Route::delete('situations/{id}', 'SituationsController@destroy')->name('situations.destroy');
-	Route::resource('users', 'UsersController');
+	Route::resource('users', 'UsersController', ['except' => ['show']]);
 });
 
 Route::group(['middleware' => ['web', 'auth']], function() {
@@ -39,6 +39,7 @@ Route::group(['middleware' => ['web', 'auth']], function() {
 });
 
 Route::group(['middleware' => ['web']], function () {
+	Route::get('users/{id}', 'UsersController@show')->name('user.show');
 	Route::get('situations', 'SituationsController@index')->name('situations.index');
 	Route::get('situations/search', 'SituationsController@search')->name('situations.search');
 	Route::get('situations/{id}', 'SituationsController@show')->name('situations.show');

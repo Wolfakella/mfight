@@ -24,6 +24,7 @@
             margin-right: 6px;
         }
     </style>
+    <link href="{{ asset('css/style.css') }}" rel='stylesheet' type='text/css'>
 </head>
 <body id="app-layout">
     <nav class="navbar navbar-default navbar-static-top">

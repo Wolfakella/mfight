@@ -4,23 +4,27 @@
 <div class="container">
 	<div class="row">
 			<form role="form" method="GET" action="{{ url('/situations/search') }}">
-	            {!! csrf_field() !!}
+	            
 	            <div class="col-xs-4">
-	            	<input class="form-control" type="text" name="query" placeholder="Введите запрос" />
+	            	<input class="form-control" type="text" name="query" placeholder="Название ситуа..." value="{{ $query or '' }}" />
 	            </div>
 	            <div class="col-xs-3">
 		            <select class="form-control" name="year">
-		            	<option value="0">Любой</option>
+		            	<option value="0">Любой год</option>
 		            	@for($i=2001; $i<2017; $i++)
-		            	<option value="{{ $i }}">{{ $i }}</option>
+		            		@if(!empty($year) && $i == $year)
+		            		<option value="{{ $i }}" selected>{{ $i }}</option>
+		            		@else
+		            		<option value="{{ $i }}">{{ $i }}</option>
+		            		@endif
 		            	@endfor
 		            </select>
 	            </div>
 	            <div class="col-xs-3">
 		            <select class="form-control" name="t">
-		            	<option value="0">Любая</option>
-		            	<option value="1">Быстрая</option>
-		            	<option value="2">Классическая</option>
+		            	<option value="0" @if(!empty($t) && $t == 0) selected @endif>Быстрые и классические</option>
+		            	<option value="1" @if(!empty($t) && $t == 1) selected @endif>Быстрые</option>
+		            	<option value="2" @if(!empty($t) && $t == 2) selected @endif>Классические</option>
 		            </select>
 		        </div>
 		        <div class="col-xs-1">
@@ -34,7 +38,7 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                    <th>S.No</th><th>Название</th><th>Год</th><th>Действия</th>
+                    <th>S.No</th><th>Название</th><th>Год</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,25 +46,14 @@
             @foreach($situations as $item)
                 {{-- */$x++;/* --}}
                 <tr>
-                    <td>{{ $x }}</td>
+                    <td>{{ $item->id }}</td>
                     <td><a href="{{ url('situations', $item->id) }}">{{ $item->title }}</a></td>
                     <td>{{ $item->created_at->format('Y') }}</td>
-                    <td>
-                        <a href="{{ url('situations/' . $item->id . '/edit') }}">
-                            <button type="submit" class="btn btn-primary btn-xs">Редактировать</button>
-                        </a> /
-                        {!! Form::open([
-                            'method'=>'DELETE',
-                            'url' => ['situations', $item->id],
-                            'style' => 'display:inline'
-                        ]) !!}
-                            {!! Form::submit('Удалить', ['class' => 'btn btn-danger btn-xs']) !!}
-                        {!! Form::close() !!}
-                    </td>
                 </tr>
             @endforeach
             </tbody>
         </table>
     </div>
+    <div class="pagination"> {!! $situations->appends(request()->all())->render() !!} </div>
 </div>
 @endsection

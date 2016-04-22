@@ -9,7 +9,8 @@
                 	<h2>
                 	{{ $situation->title }}
                 	    <div class="pull-right">
-					    <a href="{{ url('situations/year/'. $situation->created_at->format('Y')) }}" class="btn btn-default btn-sm">К {{ $situation->created_at->format('Y') }} году</a>
+					    <!--<a href="{{ url('situations/year/'. $situation->created_at->format('Y')) }}" class="btn btn-default btn-sm">К {{ $situation->created_at->format('Y') }} году</a>-->
+					    <a href="{{ url()->previous() }}" class="btn btn-default btn-sm">Назад</a>
 					    @if($cart)
                             <button type="submit" class="btn btn-default btn-sm disabled">В корзине</button>
                 		@else

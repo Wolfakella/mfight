@@ -12,7 +12,7 @@ use App\Http\Requests;
 
 class ChampsController extends Controller
 {
-    public function getIndex($id)
+    public function index()
     {
     	$champs = Champ::all();
     	//dd( $id );

@@ -28,7 +28,7 @@ Route::group(['middleware' => ['role:admin']], function () {
 	Route::get('situations/{id}/edit', 'SituationsController@edit')->name('situations.edit');
 	Route::patch('situations/{id}', 'SituationsController@update')->name('situations.update');
 	Route::delete('situations/{id}', 'SituationsController@destroy')->name('situations.destroy');
-	Route::resource('users', 'UsersController', ['except' => ['show']]);
+	Route::resource('users', 'UsersController', ['except' => ['show', 'index']]);
 });
 
 Route::group(['middleware' => ['web', 'auth']], function() {
@@ -39,14 +39,13 @@ Route::group(['middleware' => ['web', 'auth']], function() {
 });
 
 Route::group(['middleware' => ['web']], function () {
+	Route::get('users', 'UsersController@index')->name('user.index');
 	Route::get('users/{id}', 'UsersController@show')->name('user.show');
 	Route::get('situations', 'SituationsController@index')->name('situations.index');
-	Route::get('situations/search', 'SituationsController@search')->name('situations.search');
+	Route::get('situations/search', 'SituationsController@search');
 	Route::get('situations/{id}', 'SituationsController@show')->name('situations.show');
-	Route::get('situations/year/{date?}', ['as' => 'situations.year', 'uses' => 'SituationsController@year']);
-	Route::get('express/year/{year?}', 'ExpressController@year')->name('express.year');
-	Route::get('express/index', 'ExpressController@index')->name('express.index');
 	Route::controller('cart', 'CartController');
+	Route::get('champs', 'ChampsController@index')->name('champ.index');
 	Route::get('champs/{id}', 'ChampsController@show')->name('champ.show');
 	Route::get('champs/{id}/players', 'ChampsController@players');
 	Route::get('champs/{champ_id}/players/{user_id}/{status}', 'ChampsController@addplayer');

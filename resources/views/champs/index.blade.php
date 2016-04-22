@@ -4,17 +4,18 @@
 <div class="container">
     <h1>
     Чемпионаты
-    <div class="pull-right">
-    <a href="{{ url('cart/flush') }}" class="btn btn-default btn-sm">Очистить корзину</a>
-    <a href="{{ url('cart/print') }}" id="popup" class="btn btn-primary btn-sm">Распечатать ситуации</a>
-    </div>
     </h1>
     @if(!empty($champs))
     <div class="table">
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                    <th>S.No</th><th>Название</th><th>Год</th><th>Действия</th>
+                    <th>S.No</th>
+                    <th>Название</th>
+                    <th>Год</th>
+                    @role('admin')
+                    <th>Действия</th>
+                    @endrole
                 </tr>
             </thead>
             <tbody>
@@ -24,8 +25,9 @@
                 {{-- */$x++;/* --}}
                 <tr>
                     <td>{{ $x }}</td>
-                    <td><a href="{{ url('champs/', $item->id) }}">{{ $item->title }}</a></td>
+                    <td><a href="{{ url('champs', $item->id) }}">{{ $item->title }}</a></td>
                     <td>{{ $item->created_at->format('Y') }}</td>
+                    @role('admin')
                     <td>
                     	<form method="POST" action="{{ url('champs/' . $item->id) }}">
                     		<input name="_method" type="hidden" value="DELETE">
@@ -33,6 +35,7 @@
                             <button type="submit" class="btn btn-danger btn-xs">Удалить</button>
                         </form>
                     </td>
+                    @endrole
                 </tr>
             @endforeach
             

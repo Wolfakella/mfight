@@ -16,13 +16,7 @@
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <style>
-        body {
-            font-family: 'Lato';
-        }
 
-        .fa-btn {
-            margin-right: 6px;
-        }
     </style>
     <link href="{{ asset('css/style.css') }}" rel='stylesheet' type='text/css'>
 </head>
@@ -49,20 +43,9 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <!-- <li><a href="{{ url('/home') }}">Приветствие</a></li> -->
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Классические ситуации <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                        @foreach ($years as $year)
-                            <li><a href="{{ url('/situations/year/'.$year->dates) }}">{{ $year->dates }}</a></li>
-                        @endforeach
-                        </ul>
-                    </li>
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Быстрые ситуации <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                        @foreach ($expresses as $express)
-                            <li><a href="{{ url('/express/year/'.$express->dates) }}">{{ $express->dates }}</a></li>
-                        @endforeach
-                        </ul>
-                    </li>
+                    <li><a href="{{ url('champs') }}">Турниры</a></li>
+                    <li><a href="{{ url('situations') }}">Ситуации</a></li>
+                    <li><a href="{{ url('users') }}">Участники</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

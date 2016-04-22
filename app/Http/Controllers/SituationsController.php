@@ -21,8 +21,9 @@ class SituationsController extends Controller
      */
     public function index()
     {
-        $situations = Situation::whereNotNull('roles')->where('id', '>', 0)->orderBy('created_at', 'desc')->paginate(15);
-
+        $situations = Situation::select('id', 'title', 'created_at')
+        							->orderBy('created_at', 'desc')
+        							->paginate(15);
         return view('situations.index', compact('situations'));
     }
 
@@ -126,16 +127,9 @@ class SituationsController extends Controller
         return redirect('situations');
     }
     
-    public function year($date = 2016)
-    {
-    	$situations = Situation::whereNotNull('roles')->whereBetween('created_at', [ Carbon::createFromDate($date, 0, 0), Carbon::createFromDate($date+1, 0, 0)])->orderBy('created_at', 'desc')->get();
-
-        return view('situations.list', compact('situations'));
-    }
-    
     public function search(Request $request)
     {
-    	$situations = Situation::search($request['query'], $request['year'], $request['t']);
-    	return view('situations.index')->withSituations($situations);
+    	$situations = Situation::search($request['query'], $request['year'], $request['t'])->paginate(15);
+    	return view('situations.index', compact('situations'))->with($request->only('query', 'year', 't'));
     }
 }

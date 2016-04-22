@@ -45,7 +45,7 @@ class Situation extends Model
     			case '2': $result = $result->whereNotNull('roles');
     			break;
     		}
-    	$result = $result->orderBy('created_at', 'desc')->get();
+    	$result = $result->orderBy('created_at', 'desc');
     	return $result;
     }
     

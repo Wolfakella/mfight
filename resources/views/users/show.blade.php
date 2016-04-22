@@ -14,10 +14,12 @@
 			  	<dd>{{$user->company}}</dd>
 			  	<dt>Должность</dt>
 			  	<dd>{{$user->position}}</dd>
+			  	@role('admin')
 			  	<dt>Телефон</dt>
 			  	<dd>{{$user->phone}}</dd>
 			  	<dt>Email</dt>
 			  	<dd>{{$user->email}}</dd>
+			  	@endrole
 			</dl>
        	</div>
     </div>

@@ -14,6 +14,7 @@ class Duel extends Model
     		'result1',
     		'result2',
     		'type_id',
+    		'video',
     		'time'
     ];
     

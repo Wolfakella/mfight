@@ -10,6 +10,7 @@ return array(
     'AddDuelsTable' => $baseDir . '/database/migrations/2016_04_17_172013_add_duels_table.php',
     'AddFieldsToUsersTable' => $baseDir . '/database/migrations/2016_04_09_190428_add_fields_to_users_table.php',
     'AddRolesFieldToSituationsTable' => $baseDir . '/database/migrations/2016_04_07_113441_add_roles_field_to_situations_table.php',
+    'AddVideoToDuelsTable' => $baseDir . '/database/migrations/2016_04_22_151038_add_video_to_duels_table.php',
     'CreateCasesTable' => $baseDir . '/database/migrations/2016_04_05_212325_create_cases_table.php',
     'CreateChampUserTable' => $baseDir . '/database/migrations/2016_04_10_185756_create_champ_user_table.php',
     'CreateChampsTable' => $baseDir . '/database/migrations/2016_04_10_164829_create_champs_table.php',

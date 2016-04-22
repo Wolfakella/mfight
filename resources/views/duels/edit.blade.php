@@ -58,6 +58,8 @@
 				</div>
 				<label>Ситуация:</label>
 				{{ Form::select('situation_id', $situations->lists('title', 'id'), $duel->situation_id, ['class' => 'form-control']) }}
+				<label>Видео</label>
+				<textarea rows="5" cols="30" name="video" class="form-control">{!!$duel->video!!}</textarea>
 				<label>Дата и время: </label>
 				<input type="datetime" name="time" class="form-control" value="{{$duel->time}}" />
 				<input type="submit" value="Сохранить" class="btn btn-primary" />

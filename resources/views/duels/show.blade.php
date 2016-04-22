@@ -6,7 +6,9 @@
 	<h4>{{ $duel->type->text }} <small>{{ $duel->time->format('d.m.Y, H:i') }}</small></h4>
 	
 	<div class="row">
-		<iframe width="560" height="315" src="https://www.youtube.com/embed/ud5exxtBQeA" frameborder="0" allowfullscreen></iframe>
+		<div class="col-sm-7">
+		{!! $duel->video or '' !!}
+		</div>
        	<div class="col-sm-5">
        		<div class="panel panel-default">
        			<div class="panel-heading">

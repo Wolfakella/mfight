@@ -18,7 +18,11 @@
 				@if($duels)
 				@foreach($duels as $duel)
 					<h4>{{ $duel->type->text }}. <small>{{ $duel->time->format('d.m.Y, H:i') }}</small></h4>
+					@if($duel->video)
+					<a href="{{ url('duels/'.$duel->id) }}" class="btn btn-success btn-xs">Доступно видео!</a>
+					@else
 					<a href="{{ url('duels/'.$duel->id) }}" class="btn btn-primary btn-xs">Подробнее</a>
+					@endif
 					<table width="100%">
 					<tr>
 					<td  width="40%">

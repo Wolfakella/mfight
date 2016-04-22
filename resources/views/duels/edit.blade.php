@@ -10,8 +10,10 @@
     <hr/>
 	<div class="row">
 		<div class="col-sm-6">
-			<form method="POST" action="{{ url('champs/'.$champ->id.'/newduel') }}">
+			<form method="POST" action="{{ url('duels') }}">
 				{!! csrf_field() !!}
+				<input type="hidden" name="_method" value="PATCH" />
+				<input type="hidden" name="champ_id" value="{{$champ->id}}" />
 				<label>Тип поединка:</label>
 				<select class="form-control" name="type_id">
 				@foreach($types as $type)

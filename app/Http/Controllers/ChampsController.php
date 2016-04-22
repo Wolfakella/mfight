@@ -78,31 +78,4 @@ class ChampsController extends Controller
     	$champ->situations()->detach($situation_id);
     	return redirect()->back();
     }
-    public function newduel($champ_id)
-    {
-    	$champ = Champ::findOrFail($champ_id);
-    	$types = Type::all();
-    	$players = $champ->users()->wherePivot('status', 'LIKE', 'Игрок')->orderBy('surname', 'ASC')->get();
-    	$situations = $champ->situations()->get();
-    	//dd( $duels );
-    	return view('champs.editduel', [
-    			'champ' => $champ,
-    			'types' => $types,
-    			'players' => $players,
-    			'situations' => $situations
-    	]);
-    }
-    public function storeduel($champ_id, Request $request)
-    {
-    	$duel = new Duel;
-    	$duel->fill($request->all());
-    	$duel->champ_id = $champ_id;
-    	$duel->save();
-    	return redirect()->route('champ.show', [$champ_id]);
-    }
-    public function removeduel($champ_id, $duel_id)
-    {
-    	Duel::destroy($duel_id);
-    	return redirect()->route('champ.show', [$champ_id]);
-    }
 }

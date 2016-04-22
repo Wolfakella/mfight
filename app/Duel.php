@@ -19,7 +19,10 @@ class Duel extends Model
     
     protected $dates = ['created_at', 'updated_at', 'time'];
     
-    //protected $dateFormat = 'd.m.Y H:i';
+    public static function getPlayersDuels($player1_id, $player2_id)
+    {
+    	
+    }
     
     public function player1()
     {

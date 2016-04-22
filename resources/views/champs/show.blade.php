@@ -18,6 +18,7 @@
 				@if($duels)
 				@foreach($duels as $duel)
 					<h4>{{ $duel->type->text }}. <small>{{ $duel->time->format('d.m.Y, H:i') }}</small></h4>
+					<a href="{{ url('duels/'.$duel->id) }}" class="btn btn-primary btn-xs">Подробнее</a>
 					<table width="100%">
 					<tr>
 					<td  width="40%">
@@ -34,9 +35,10 @@
 					<strong>Ситуация: </strong>
 					<a href="{{ url('situations/'.$duel->situation_id) }}">{{ $duel->situation->title }}</a>
 					@role('admin')
-					<form method="POST" action="{{ url('champs/'.$champ->id.'/removeduel/'.$duel->id) }}">
+					<form method="POST" action="{{ url('duels') }}">
 						<input type="hidden" name="_method" value="DELETE" />
 						{!! csrf_field() !!}
+						<input type="hidden" name="duel_id" value="{{$duel->id}}" />
 						<input type="submit" value="Удалить" class="btn btn-danger" />
 					</form>
 					@endrole

@@ -2,13 +2,13 @@
 
 @section('content')
 <div class="container">
-	<h2>{{ $duel->champ->title}}</h2>
+	<h2><a href="{{ route('champ.show', [$duel->champ_id]) }}">{{ $duel->champ->title}}</a></h2>
 	<h4>{{ $duel->type->text }} <small>{{ $duel->time->format('d.m.Y, H:i') }}</small></h4>
 	
 	<div class="row">
 		@if($duel->video)
 		<div class="col-sm-7">
-			{{ $duel->video }}
+			{!! $duel->video !!}
 		</div>
 		@endif
        	<div class="col-sm-5">

@@ -9,6 +9,7 @@
     <style type="text/css">
         body {
             font-family: 'Arial';
+            font-size: 10pt;
         }
     </style>
 </head>

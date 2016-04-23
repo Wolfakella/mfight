@@ -13,8 +13,12 @@ class DuelsController extends Controller
 	public function show($id)
 	{
 		$duel = Duel::findOrFail($id);
-		//dd( $duel );
-		return view('duels.show')->withDuel($duel);
+		$history = Duel::whereIn('player1_id', [$duel->player1_id, $duel->player2_id])
+						->whereIn('player2_id', [$duel->player1_id, $duel->player2_id])
+						->orderBy('time', 'DESC')
+						->get();
+		$history->shift();
+		return view('duels.show', compact('duel', 'history'));
 	}
 	public function create($champ_id)
 	{

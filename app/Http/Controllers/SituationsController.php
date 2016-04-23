@@ -75,7 +75,9 @@ class SituationsController extends Controller
         ) $inCart = 1;
         else $inCart = 0;
         
-        return view('situations.show', compact('situation'))->withcart($inCart);
+        $history = $situation->duels;
+        
+        return view('situations.show', compact('situation', 'history'))->withcart($inCart);
     }
 
     /**

@@ -8,12 +8,14 @@
 	<div class="row">
 		<div class="col-md-8">
 			<div class="panel panel-default">
-				<div class="panel-heading"><h4>
+				<div class="panel-heading"><h3>
 				Поединки
 				@role('admin')
 				<a href="{{ url('champs/'.$champ->id.'/newduel') }}" class="btn btn-primary btn-sm">Добавить</a>
 				@endrole
-				</h3></div>
+				<div class="fb-like pull-right" data-href="{{ route('champ.show', [$champ->id]) }}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+				</h3>
+				</div>
 				<div class="panel-body text-center">
 				@if($duels)
 				@foreach($duels as $duel)

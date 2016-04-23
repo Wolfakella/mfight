@@ -3,7 +3,9 @@
 @section('content')
 <div class="container">
 	<h2><a href="{{ route('champ.show', [$duel->champ_id]) }}">{{ $duel->champ->title}}</a></h2>
-	<h4>{{ $duel->type->text }} <small>{{ $duel->time->format('d.m.Y, H:i') }}</small></h4>
+	<h4>{{ $duel->type->text }} <small>{{ $duel->time->format('d.m.Y, H:i') }}</small>
+		<div class="fb-like pull-right" data-href="{{ route('duels.show', [$duel->id]) }}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+	</h4>
 	
 	<div class="row">
 		@if($duel->video)
@@ -78,7 +80,7 @@
 		</div>
        	</div>
        	<div class="col-sm-6">
-       		<div class="fb-comments" data-href="http://mfight.esy.es/duels/{{ $duel->id }}" data-numposts="5"></div>
+       		<div class="fb-comments" data-href="{{ route('duels.show', [$duel->id]) }}" data-numposts="5"></div>
     	</div>
     </div>
 </div>

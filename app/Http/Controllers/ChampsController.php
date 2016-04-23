@@ -63,8 +63,9 @@ class ChampsController extends Controller
     public function situations($champ_id, Request $request)
     {
     	$champ_situations = Champ::find($champ_id)->situations()->get();
-    	$situations = Situation::search($request['query'], $request['year'], $request['t']);
-    	return view('champs.situations', ['situations' => $situations, 'champ_situations' => $champ_situations, 'champ' => $champ_id]);
+    	$situations = Situation::search($request['query'], $request['year'], $request['t'])->select('id', 'title', 'created_at')->paginate(15);
+    	//dd( $situations );
+    	return view('champs.situations', compact('champ_situations','situations','champ_id'))->with($request->only('query','year','t'));
     }
     public function addsituation($champ_id, $situation_id)
     {

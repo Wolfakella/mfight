@@ -34,7 +34,7 @@ Route::group(['middleware' => ['role:admin']], function () {
 	Route::get('champs/{champ_id}/players/{user_id}/{status}', 'ChampsController@addplayer');
 	Route::get('champs/{champ_id}/remove/{user_id}', 'ChampsController@removeplayer');
 	Route::any('champs/{id}/situations', 'ChampsController@situations');
-	Route::get('champs/{champ_id}/situations/{situation_id}', 'ChampsController@addsituation');
+	Route::get('champs/{champ_id}/situations/{situation_id}', 'ChampsController@addsituation')->name('champ.addsituation');
 	Route::get('champs/{champ_id}/situationremove/{situation_id}', 'ChampsController@removesituation');
 	Route::delete('champs/{id}', 'ChampsController@remove');
 	Route::get('champs/{champ_id}/newduel', 'DuelsController@create');
@@ -62,7 +62,6 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('champs', 'ChampsController@index')->name('champ.index');
 	Route::get('champs/{id}', 'ChampsController@show')->name('champ.show');
 	Route::get('duels/{id}', 'DuelsController@show')->name('duels.show');
-	Route::controller('champs', 'ChampsController');
 
 	//	Route::get('situations/competition/{year}/{competition?}', 'SituationsController@competition')->name('situations.competition');
 });

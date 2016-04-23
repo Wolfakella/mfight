@@ -36,7 +36,8 @@ class Situation extends Model
     {
     	$result = Situation::query();
     	if($query) $result = $result->where('title', 'LIKE', '%'.$query.'%');
-    	if($year) $result = $result->whereBetween('created_at', [ Carbon::createFromDate($year, 0, 0), Carbon::createFromDate($year+1, 0, 0)]);
+    	//if($year) $result = $result->whereBetween('created_at', [ Carbon::createFromDate($year, 0, 0), Carbon::createFromDate($year+1, 0, 0)]);
+    	if($year) $result = $result->whereYear('created_at', '=', $year);
     	if ($type)
     		switch($type)
     		{

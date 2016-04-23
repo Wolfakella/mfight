@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Duel;
 use App\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -60,8 +60,12 @@ class UsersController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
+        $duels = Duel::where('player1_id', '=', $id)
+        				->orWhere('player2_id', '=', $id)
+        				->orderBy('time', 'DESC')
+        				->get();
 
-        return view('users.show', compact('user'));
+        return view('users.show', compact('user', 'duels'));
     }
 
     /**

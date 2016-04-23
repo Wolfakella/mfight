@@ -7,11 +7,13 @@
 	
 	<div class="row">
 		@if($duel->video)
-		<div class="col-sm-7">
+		<div class="col-sm-6">
 			{!! $duel->video !!}
+			
 		</div>
 		@endif
-       	<div class="col-sm-5">
+		
+       	<div class="col-sm-6">
        		<div class="panel panel-default">
        			<div class="panel-heading">
 					<h3>Информация</h3>
@@ -35,9 +37,7 @@
 					<hr />
 				</div>
 			</div>
-       	</div>
-       	<div class="col-sm-7">
-    	<div class="panel panel-default">
+			<div class="panel panel-default">
 	    		<div class="panel-heading"><h4>
 					История поединков
 					</h3>
@@ -71,9 +71,14 @@
 					<a href="{{ url('situations/'.$duel->situation_id) }}">{{ $duel->situation->title }}</a>
 					<hr />
 				@endforeach
+				@else
+				<h4>Пока это единственный поединок между данными игроками. Но то ли еще будет! =)</h4>
 				@endif
 				</div>
 		</div>
+       	</div>
+       	<div class="col-sm-6">
+       		<div class="fb-comments" data-href="http://mfight.esy.es/duels/{{ $duel->id }}" data-numposts="5"></div>
     	</div>
     </div>
 </div>

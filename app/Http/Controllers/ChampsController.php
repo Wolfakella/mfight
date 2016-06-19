@@ -79,4 +79,9 @@ class ChampsController extends Controller
     	$champ->situations()->detach($situation_id);
     	return redirect()->back();
     }
+    
+    public function brackets()
+    {
+    	return view('champs.brackets');
+    }
 }

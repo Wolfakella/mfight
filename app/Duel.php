@@ -8,6 +8,7 @@ class Duel extends Model
 {
     protected $fillable = [
     		'champ_id',
+    		'order',
     		'situation_id',
     		'player1_id',
     		'player2_id',
@@ -20,9 +21,11 @@ class Duel extends Model
     
     protected $dates = ['created_at', 'updated_at', 'time'];
     
-    public static function getPlayersDuels($player1_id, $player2_id)
+    protected $appends = ['link'];
+    
+    public function getLinkAttribute()
     {
-    	
+    	return url()->route('duels.show', [$this->attributes['id']]);
     }
     
     public function player1()

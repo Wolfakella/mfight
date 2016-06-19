@@ -61,6 +61,8 @@
 				<textarea rows="5" cols="30" name="video" class="form-control"></textarea>
 				<label>Дата и время: </label>
 				<input type="datetime" name="time" class="form-control" value="{{$duel->time}}" />
+				<label>Номер поединка: </label>
+				<input type="text" name="order" class="form-control" value="{{$duel->order}}" />
 				<input type="submit" value="Сохранить" class="btn btn-primary" />
 				<a href="" class="btn btn-default">Назад</a>
 			</form>

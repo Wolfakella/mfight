@@ -33,8 +33,17 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'login'
     ];
+    
+    protected $appends = [
+    	'name_surname'	
+    ];
+    
+    public function getNameSurnameAttribute()
+    {
+    	return $this->attributes['name'] . ' ' . $this->attributes['surname']; 
+    }
     
     public function champs()
     {

@@ -5,6 +5,11 @@
 	<div class="row text-center">
 	<h2 class="col-md-offset-2 col-md-8">{{ $champ->title }}</h2>
 	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">Турнирная таблица</div>
+		<div id="main" class="panel-body">
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-md-8">
 			<div class="panel panel-default">
@@ -19,7 +24,7 @@
 				<div class="panel-body text-center">
 				@if($duels)
 				@foreach($duels as $duel)
-					<h4>{{ $duel->type->text }}. <small>{{ $duel->time->format('d.m.Y, H:i') }}</small></h4>
+					<h4>{{ $duel->type->text }}. <small>№{{ $duel->order }} {{ $duel->time->format('d.m.Y, H:i') }}</small></h4>
 					@if($duel->video)
 					<a href="{{ url('duels/'.$duel->id) }}" class="btn btn-success btn-xs">Доступно видео!</a>
 					@else

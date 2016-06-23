@@ -70,12 +70,16 @@
 					<tr>
 					<td  width="40%">
 					<a href="{{ url('users/'.$duel->player1_id) }}" class="lead">{{ $duel->player1->name }} {{ $duel->player1->surname }}</a>
+					<br/>
+					<small>Рейтинг: {{ $duel->rating1 }}</small>
 					</td>
 					<td width="20%">
 					<h3>{{ $duel->result1 }} : {{ $duel->result2 }}</h3>
 					</td>
 					<td width="40%">
 					<a href="{{ url('users/'.$duel->player2_id) }}" class="lead">{{ $duel->player2->name }} {{ $duel->player2->surname }}</a>
+					<br/>
+					<small>Рейтинг: {{ $duel->rating2 }}</small>
 					</td>
 					</tr>
 					</table>

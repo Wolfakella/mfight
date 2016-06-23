@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Duel;
 use App\Champ;
 use App\Type;
-use App\Http\Requests;
+use App\Custom\Rating;
 
 class DuelsController extends Controller
 {
@@ -50,14 +50,33 @@ class DuelsController extends Controller
     public function update(Request $request, $id)
     {
     	$duel = Duel::findOrFail($id);
-    	$duel->fill($request->except(['_token', '_method']));
+    	$duel->fill($request->except(['_token']));
+
     	$duel->save();
+    	if($duel->result1 > $duel->result2)
+    	{
+    		$duel->player1->rating = Rating::getWinRating($duel->rating1, $duel->rating2);
+    		$duel->player2->rating = Rating::getLoseRating($duel->rating1, $duel->rating2);
+    	}
+    	else
+    	{
+    		$duel->player1->rating = Rating::getLoseRating($duel->rating2, $duel->rating1);
+    		$duel->player2->rating = Rating::getWinRating($duel->rating2, $duel->rating1);
+    	}
+    	$duel->player1->save();
+    	$duel->player2->save();
+
     	return redirect()->route('champ.show', [$request->input('champ_id')]); 
     }
     
     public function store(Request $request)
     {
-    	$duel = Duel::create($request->except(['_token']));
+    	$duel = new Duel();
+    	$duel->fill($request->except(['_token']));
+    	$duel->rating1 = $duel->player1->rating;
+    	$duel->rating2 = $duel->player2->rating;
+    	
+    	$duel->save();
     	return redirect()->route('champ.show', [$request['champ_id']]);
     }
     

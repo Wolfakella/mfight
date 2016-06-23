@@ -52,4 +52,5 @@ class Duel extends Model
     {
     	return $this->belongsTo('App\Type');
     }
+    
 }

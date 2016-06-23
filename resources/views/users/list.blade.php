@@ -32,6 +32,8 @@
                             {!! Form::submit('Удалить', ['class' => 'btn btn-danger btn-xs']) !!}
                         {!! Form::close() !!}
                 </div>
+                @else
+                <div class="col-md-2">Рейтинг:<p class="lead">{{ $item->rating }}</p></div>
                 @endrole
             </div>
             <hr />

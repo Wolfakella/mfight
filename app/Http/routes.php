@@ -64,7 +64,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('champs/{id}/brackets', 'ChampsController@brackets')->name('champ.brackets');
 	Route::get('duels/{id}', 'DuelsController@show')->name('duels.show');
 	Route::controller('ajax', 'AjaxController');
-
+	Route::controller('docx', 'DocxController');
 	//	Route::get('situations/competition/{year}/{competition?}', 'SituationsController@competition')->name('situations.competition');
 });
 

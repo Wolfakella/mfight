@@ -30,7 +30,7 @@
                  	{!! $item->roles !!}
                 @endif
                 <a href="#">{{ $item->link }}</a>
-            </div>              
+            	</div>              
             @endforeach
     @else
     <h4>В вашей корзине пусто!</h4>

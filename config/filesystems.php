@@ -45,7 +45,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => storage_path(),
         ],
 
         'public' => [
@@ -61,6 +61,12 @@ return [
             'region' => 'your-region',
             'bucket' => 'your-bucket',
         ],
+    		
+    	/* Akella's disc for docx experiments */
+    	'base' => [
+    		'driver' => 'local',
+    		'root' => base_path(),
+    	],
 
     ],
 
